@@ -15,4 +15,5 @@ private EmployeeDetail assignedTo;
 private LocalDateTime createdTime;
 private String status;
 private LocalDateTime modifiedTime;
+private String priority;
 }

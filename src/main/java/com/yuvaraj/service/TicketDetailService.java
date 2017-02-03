@@ -45,6 +45,16 @@ public void update(TicketDetail ticketDetail){
 		logger.log(Level.SEVERE, "Exception occur", e);
 		}
 }
+public void createTicket(TicketDetail ticketDetail){
+	try{
+		ticketDetailValidator.createTicketValidation(ticketDetail);
+		TicketDetailDao ticketDetailDao=new TicketDetailDao();
+		ticketDetailDao.createticket(ticketDetail);
+		
+	}catch(ValidationException e){
+		logger.log(Level.SEVERE,"Exception occur", e);
+	}
+}
 public void assignTicket(TicketDetail ticketDetail ){
 	try{
 		ticketDetailValidator.assignTicketValidation(ticketDetail);

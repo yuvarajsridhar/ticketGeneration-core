@@ -50,6 +50,18 @@ public void saveValidation(TicketDetail ticketDetail)throws ValidationException{
    timeValidation(ticketDetail.getCreatedTime());
    timeValidation(ticketDetail.getModifiedTime());
    statusValidation(ticketDetail.getStatus());
+   
+}
+public void createTicketValidation(TicketDetail ticketDetail)throws ValidationException{
+	ticketValidation(ticketDetail);
+	idvalidation(ticketDetail.getId());
+	userValidation(ticketDetail.getUserId().getId());
+	departmentValidation(ticketDetail.getDepartmentId().getId());
+	subjectValidation(ticketDetail.getSubject());
+   descriptionValidation(ticketDetail.getDescription());
+   timeValidation(ticketDetail.getCreatedTime());
+   
+   
 }
 public void deleteValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());

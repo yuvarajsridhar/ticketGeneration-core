@@ -15,11 +15,16 @@ public class TicketDetailDao {
 JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 public int save(TicketDetail ticketDetail)
 {
-	String sql="insert into ticket_details(id,user,department,subject,description,assigned_to,created_time,modified_time)values (?,?,?,?,?,?,?,?)";
+	String sql="insert into ticket_details(id,user,department,subject,description,assigned_to,created_time,modified_time,priority)values (?,?,?,?,?,?,?,?,?)";
 	Object[] params={ticketDetail.getId(),ticketDetail.getUserId().getId(),ticketDetail.getDepartmentId().getId(),ticketDetail.getSubject()
-			,ticketDetail.getDescription(),ticketDetail.getAssignedTo().getId(),ticketDetail.getCreatedTime(),ticketDetail.getModifiedTime()};
+			,ticketDetail.getDescription(),ticketDetail.getAssignedTo().getId(),ticketDetail.getCreatedTime(),ticketDetail.getModifiedTime(),ticketDetail.getPriority()};
 	return (jdbcTemplate.update(sql,params));
 	}
+public int createticket(TicketDetail ticketDetail){
+	String sql="insert into ticket_details(id,user,department,subject,description,created_time,priority )values(?,?,?,?,?,?,?)";
+	Object[] params={ticketDetail.getId(),ticketDetail.getUserId().getId(),ticketDetail.getDepartmentId().getId(),ticketDetail.getSubject(),ticketDetail.getDescription(),ticketDetail.getCreatedTime(),ticketDetail.getPriority()};
+   return jdbcTemplate.update(sql,params);
+}
 public int delete(int id,int userId) {
 	
 	String sql = "delete from ticket_details where id =? and user=?";
@@ -71,6 +76,7 @@ public List<TicketDetail> select(int userId) {
 		ticketDetail.setCreatedTime(rs.getTimestamp("created_time").toLocalDateTime());
 		ticketDetail.setStatus(rs.getString("status"));
 		ticketDetail.setModifiedTime(rs.getTimestamp("modified_time").toLocalDateTime());
+		ticketDetail.setPriority(rs.getString("priority"));
 		
 		
 		
@@ -103,7 +109,7 @@ public TicketDetail selectOne(int id) {
 		ticketDetail.setCreatedTime(rs.getTimestamp("created_time").toLocalDateTime());
 		ticketDetail.setStatus(rs.getString("status"));
 		ticketDetail.setModifiedTime(rs.getTimestamp("modified_time").toLocalDateTime());
-		
+		ticketDetail.setPriority(rs.getString("priority"));
 		
 		
 		return ticketDetail;

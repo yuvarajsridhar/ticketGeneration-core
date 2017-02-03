@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
+import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.Issue;
 import com.yuvaraj.model.TicketDetail;
@@ -23,7 +24,8 @@ public class TestUserDetailService {
 			//testAssignTicket();
 			//testReplysolution();
             //  testReassign();
-			testDeleteTicket();
+		//	testDeleteTicket();
+	 ticketCreation();
 			}
 	
 	static void testLogin(){
@@ -40,6 +42,22 @@ public class TestUserDetailService {
 		userDetail.setPassword("jdjdnndd");
 	userDetailService.regestration(userDetail);
 		
+	}
+	static void ticketCreation(){
+		TicketDetail ticketDetail=new TicketDetail();
+		ticketDetail.setId(1);
+		UserDetail userDetail=new UserDetail();
+		userDetail.setId(1);
+		ticketDetail.setUserId(userDetail);
+		Department department=new Department();
+		department.setId(1);
+		ticketDetail.setDepartmentId(department);
+		ticketDetail.setSubject("ndnjd");
+		ticketDetail.setDescription("hjdhhjd");
+		ticketDetail.setCreatedTime(LocalDateTime.now());
+		ticketDetail.setPriority("high");
+		TicketDetailService ticketDetailService=new TicketDetailService();
+		ticketDetailService.createTicket(ticketDetail);
 	}
 	 static void  testUpdate(){
 		 TicketDetailService ticketDetailService=new TicketDetailService();
