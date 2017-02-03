@@ -36,8 +36,8 @@ public int closeTicket(int id){
 	return jdbcTemplate.update(sql,params);
 }
 public int assignTicket(int ticketId,int employeeId ,LocalDateTime time){
-	String sql="update ticket_details set assigned_to=?,modified_time=? where id=? and status=?";
-	Object[] params={employeeId,time,ticketId,"open"};
+	String sql="update ticket_details set assigned_to=?,modified_time=?,status=? where id=? and status=?";
+	Object[] params={employeeId,time,"inprogress",ticketId,"open"};
 	return jdbcTemplate.update(sql,params);
 }
 public int reassignTicket(int ticketId,int employeeId ){

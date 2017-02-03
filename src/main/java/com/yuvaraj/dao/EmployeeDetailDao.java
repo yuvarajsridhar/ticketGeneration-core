@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
+import com.yuvaraj.model.Role;
 
 public class EmployeeDetailDao {
  JdbcTemplate jdbcTemplate=new JdbcTemplate();
@@ -13,7 +14,7 @@ public class EmployeeDetailDao {
 {
 	String sql="insert into seed_employee_details(id,name,email_id,password,department,role)values (?,?,?,?,?,?)";
 	Object[] params={employeeDetail.getId(),employeeDetail.getName(),employeeDetail.getEmailId(),employeeDetail.getPassword(),
-			employeeDetail.getDepartment().getId(),employeeDetail.getRole()};
+			employeeDetail.getDepartment().getId(),employeeDetail.getRole().getId()};
 	return (jdbcTemplate.update(sql,params));
 	}
  public int delete(int id) {
@@ -38,7 +39,9 @@ public class EmployeeDetailDao {
 		department.setId(rs.getInt("departname"));
 		employeeDetail.setDepartment(department);
 		employeeDetail.setActive(rs.getBoolean("active"));
-		employeeDetail.setRole(rs.getString("role"));
+		Role role=new Role();
+		role.setId(rs.getInt("role"));
+		employeeDetail.setRole(role);
 		return employeeDetail;
 		
 	});

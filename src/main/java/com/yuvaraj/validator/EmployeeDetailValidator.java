@@ -26,8 +26,8 @@ public void departmentValidation(Integer id)throws ValidationException{
 public  void statusValidation(boolean num)throws ValidationException{
 	ValidationUtil.isValidBoolean(num, "invalid status");
 }
-public void roleValidation(String name)throws ValidationException{
-	ValidationUtil.isInvalidString(name, "invalid role");
+public void roleValidation(Integer id)throws ValidationException{
+	ValidationUtil.isInvalidNumber(id, "invalid role");
 }
 public void saveValidation(EmployeeDetail employeeDetail )throws  ValidationException{
 	employeeValidation(employeeDetail);
@@ -37,7 +37,7 @@ public void saveValidation(EmployeeDetail employeeDetail )throws  ValidationExce
 	passwordValidation(employeeDetail.getPassword());
 	departmentValidation(employeeDetail.getDepartment().getId());
 	statusValidation(employeeDetail.isActive());
-	roleValidation(employeeDetail.getRole());
+	roleValidation(employeeDetail.getRole().getId());
 }
 public void deleteValidation(EmployeeDetail employeeDetail)throws ValidationException{
 	employeeValidation(employeeDetail);

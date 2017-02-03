@@ -10,5 +10,5 @@ private String emailId;
 private String Password;
 private Department department;
 private boolean active;
-private String role;
+private Role role;
 }
