@@ -3,6 +3,7 @@ package com.yuvaraj.validator;
 import java.time.LocalDateTime;
 
 import com.yuvaraj.exception.ValidationException;
+import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.util.ValidationUtil;
 
@@ -34,6 +35,9 @@ public void timeValidation(LocalDateTime num)throws ValidationException{
 public void statusValidation(String name)throws ValidationException{
 	ValidationUtil.isInvalidString(name, "invalid status");
 }
+public void adminValidation(EmployeeDetail employeeDetail)throws ValidationException{
+	ValidationUtil.isInvalidObject(employeeDetail, "employee is not ia admin");
+}
 
 public void saveValidation(TicketDetail ticketDetail)throws ValidationException{
 	ticketValidation(ticketDetail);
@@ -49,6 +53,7 @@ public void saveValidation(TicketDetail ticketDetail)throws ValidationException{
 }
 public void deleteValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
+	userValidation(ticketDetail.getUserId().getId());
 }
 public void updateValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
@@ -61,5 +66,9 @@ public void closeticketValidation(TicketDetail ticketDetail)throws ValidationExc
 public void assignTicketValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
 	employeeValidation(ticketDetail.getId());
+}
+public void deleteTicketAssign(EmployeeDetail row)throws ValidationException{
+	adminValidation(row);
+	
 }
 }

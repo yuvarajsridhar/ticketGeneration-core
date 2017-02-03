@@ -2,6 +2,7 @@ package com.yuvaraj.service;
 
 import java.time.LocalDateTime;
 
+import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.Issue;
@@ -20,9 +21,9 @@ public class TestUserDetailService {
 //	testCloseTicket();
 			// testViewTicket();
 			//testAssignTicket();
-			testReplysolution();
+			//testReplysolution();
             //  testReassign();
-			
+			testDeleteTicket();
 			}
 	
 	static void testLogin(){
@@ -91,5 +92,15 @@ public class TestUserDetailService {
 		ticketDetail.setAssignedTo(employeeDetail);
 		
 		ticketDetailService.updateReassign(ticketDetail);
+	}
+	static void testDeleteTicket(){
+		TicketDetailService ticketDetailService=new TicketDetailService();
+		TicketDetail ticketDetail=new TicketDetail();
+		ticketDetail.setId(1);
+		UserDetail userDetail=new UserDetail();
+		userDetail.setId(1);
+		ticketDetail.setUserId(userDetail);
+
+		ticketDetailService.delete(ticketDetail);
 	}
 }

@@ -20,9 +20,10 @@ public int save(TicketDetail ticketDetail)
 			,ticketDetail.getDescription(),ticketDetail.getAssignedTo().getId(),ticketDetail.getCreatedTime(),ticketDetail.getModifiedTime()};
 	return (jdbcTemplate.update(sql,params));
 	}
-public int delete(int id) {
-	String sql = "delete from ticket_details where id =?";
-	Object[] params = { id };
+public int delete(int id,int userId) {
+	
+	String sql = "delete from ticket_details where id =? and user=?";
+	Object[] params = { id,userId };
 	return (jdbcTemplate.update(sql, params));
 }
 public int update(int id,int userId,String status) {
@@ -108,5 +109,16 @@ public TicketDetail selectOne(int id) {
 		return ticketDetail;
 		
 	});
+}
+public EmployeeDetail checkadmin (int id)
+{
+	String sql="select id from seed_employee_details where id=? and role=(select id from seed_role where name=?)";
+	Object[] params={id,"admin"};
+	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
+		EmployeeDetail employeeDetail=new EmployeeDetail();
+		employeeDetail.setId(rs.getInt("id"));
+		return employeeDetail;
+	});
+	
 }
 }

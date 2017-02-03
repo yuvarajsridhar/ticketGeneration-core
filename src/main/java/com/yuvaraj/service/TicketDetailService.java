@@ -3,9 +3,11 @@ package com.yuvaraj.service;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
 import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.Department;
+import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.validator.TicketDetailValidator;
 
@@ -25,7 +27,11 @@ public void delete(TicketDetail ticketDetail){
 	try{
 		ticketDetailValidator.deleteValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
-		ticketDetailDao.delete(ticketDetail.getId());
+		EmployeeDetail row =ticketDetailDao.checkadmin(ticketDetail.getUserId().getId());
+	     ticketDetailValidator.deleteTicketAssign(row);
+			IssueDao issueDao=new IssueDao();
+			issueDao.deleteIssue(ticketDetail);
+		ticketDetailDao.delete(ticketDetail.getId(),ticketDetail.getUserId().getId());
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE,"exception occur",e);
 	}
@@ -67,4 +73,5 @@ public void close(TicketDetail ticketDetail){
 		logger.log(Level.SEVERE, "exception occur", e);
 	}
 }
+
 }

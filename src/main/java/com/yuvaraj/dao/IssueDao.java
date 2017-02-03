@@ -29,6 +29,11 @@ public int update(int id,String solution){
 	Object[] params={solution,id};
 	return jdbcTemplate.update(sql,params);
 }
+public int deleteIssue(TicketDetail ticketDetail) {
+	String sql = "delete from issues where id =?";
+	Object[] params = { ticketDetail.getId() };
+	return (jdbcTemplate.update(sql, params));
+}
 public List<Issue> select() {
 	String sql="select *from issues ";
 	return jdbcTemplate.query(sql,(rs,rownum)->{
