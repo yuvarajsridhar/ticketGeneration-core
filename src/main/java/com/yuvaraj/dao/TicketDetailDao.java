@@ -1,5 +1,6 @@
 package com.yuvaraj.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,14 +25,19 @@ public int delete(int id) {
 	Object[] params = { id };
 	return (jdbcTemplate.update(sql, params));
 }
-public int update(int id,String status) {
-	String sql = "update ticket_Details set status=? where id =?";
-	Object[] params = { status,id };
+public int update(int id,int userId,String status) {
+	String sql = "update ticket_Details set subject=? where id =? and user=?";
+	Object[] params = { status,id,userId };
 	return (jdbcTemplate.update(sql, params));
 }
-public int assignTicket(int ticketId,int employeeId ){
-	String sql="update ticket_details set assigned_to=? where id=? ";
-	Object[] params={employeeId,ticketId};
+public int closeTicket(int id){
+	String sql="update ticket_details set status=? where id=?";
+	Object[] params={"closed",id};
+	return jdbcTemplate.update(sql,params);
+}
+public int assignTicket(int ticketId,int employeeId ,LocalDateTime time){
+	String sql="update ticket_details set assigned_to=?,modified_time=? where id=? and status=?";
+	Object[] params={employeeId,time,ticketId,"open"};
 	return jdbcTemplate.update(sql,params);
 }
 public int reassignTicket(int ticketId,int employeeId ){
@@ -39,9 +45,10 @@ public int reassignTicket(int ticketId,int employeeId ){
 	Object[] params={employeeId,ticketId};
 	return jdbcTemplate.update(sql,params);
 }
-public List<TicketDetail>select() {
-	String sql="select *from ticket_details";
-	return jdbcTemplate.query(sql,(rs,rownum)->{
+public List<TicketDetail> select(int userId) {
+	String sql="select *from ticket_details where user=?";
+	Object[] params={userId};
+	return jdbcTemplate.query(sql,params,(rs,rownum)->{
 		TicketDetail ticketDetail= new TicketDetail();
 		ticketDetail.setId(rs.getInt("id"));
 		
@@ -72,7 +79,8 @@ public List<TicketDetail>select() {
 }
 public TicketDetail selectOne(int id) {
 	String sql="select *from ticket_details where id=?";
-	return jdbcTemplate.queryForObject(sql,(rs,rownum)->{
+	Object[] params={id};
+	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
 		TicketDetail ticketDetail= new TicketDetail();
 		ticketDetail.setId(rs.getInt("id"));
 		

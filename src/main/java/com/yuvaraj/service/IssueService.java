@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.Issue;
+import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.validator.IssueValidator;
 
 public class IssueService {
@@ -17,6 +18,7 @@ public void replyToTicket(Issue issue){
 		issueValidator.saveValidation(issue);
 		IssueDao issueDao=new IssueDao();
 		issueDao.save(issue);
+		
 		issueDao.updateStatus(issue.getTicket().getId());
 	}
 	catch(ValidationException e){

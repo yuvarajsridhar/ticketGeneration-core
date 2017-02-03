@@ -34,7 +34,7 @@ public void update(TicketDetail ticketDetail){
 	try{
 		ticketDetailValidator.updateValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
-		ticketDetailDao.update(ticketDetail.getUserId().getId(), ticketDetail.getStatus());
+		ticketDetailDao.update(ticketDetail.getUserId().getId(), ticketDetail.getUserId().getId(),ticketDetail.getSubject());
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE, "Exception occur", e);
 		}
@@ -43,7 +43,7 @@ public void assignTicket(TicketDetail ticketDetail ){
 	try{
 		ticketDetailValidator.assignTicketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
-		ticketDetailDao.assignTicket(ticketDetail.getId(), ticketDetail.getAssignedTo().getId());
+		ticketDetailDao.assignTicket(ticketDetail.getId(), ticketDetail.getAssignedTo().getId(),ticketDetail.getModifiedTime());
 	}catch(ValidationException e)
 	{
 		logger.log(Level.SEVERE,"Exception occur", e);
@@ -57,5 +57,14 @@ public void updateReassign(TicketDetail ticketDetail){
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE, "Exception occur", e);
 		}
+}
+public void close(TicketDetail ticketDetail){
+	try{
+		ticketDetailValidator.closeticketValidation(ticketDetail);
+		TicketDetailDao ticketDetailDao=new TicketDetailDao();
+		ticketDetailDao.closeTicket(ticketDetail.getId());
+	}catch(ValidationException e){
+		logger.log(Level.SEVERE, "exception occur", e);
+	}
 }
 }

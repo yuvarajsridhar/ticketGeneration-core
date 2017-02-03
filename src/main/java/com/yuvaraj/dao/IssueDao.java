@@ -1,7 +1,9 @@
 package com.yuvaraj.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.yuvaraj.model.Issue;
@@ -13,7 +15,7 @@ JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 public int save(Issue issue)
 
 {
-	String sql="insert into issue(id,ticket,solution)values (?,?,?)";
+	String sql="insert into issues(id,ticket,solution)values (?,?,?)";
 	Object[] params={issue.getId(),issue.getTicket().getId(),issue.getSolution()};
 	return (jdbcTemplate.update(sql,params));
 	}
@@ -66,7 +68,7 @@ public List<TicketDetail> viewTicket(int id){
 	});
 }
 public int updateStatus(int ticketId){
-	String sql="update ticket_details set status=? where id=?";
+	String sql="update ticket_details set status=? ,modified_time=now() where id=?";
 	Object[] params={"resolved",ticketId};
 	return jdbcTemplate.update(sql,params);
 }

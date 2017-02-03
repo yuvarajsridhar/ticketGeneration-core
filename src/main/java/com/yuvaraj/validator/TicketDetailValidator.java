@@ -34,6 +34,7 @@ public void timeValidation(LocalDateTime num)throws ValidationException{
 public void statusValidation(String name)throws ValidationException{
 	ValidationUtil.isInvalidString(name, "invalid status");
 }
+
 public void saveValidation(TicketDetail ticketDetail)throws ValidationException{
 	ticketValidation(ticketDetail);
 	idvalidation(ticketDetail.getId());
@@ -51,7 +52,11 @@ public void deleteValidation(TicketDetail ticketDetail)throws ValidationExceptio
 }
 public void updateValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
-	statusValidation(ticketDetail.getStatus());
+	subjectValidation(ticketDetail.getSubject());
+}
+public void closeticketValidation(TicketDetail ticketDetail)throws ValidationException{
+	idvalidation(ticketDetail.getId());
+	
 }
 public void assignTicketValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
