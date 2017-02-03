@@ -51,7 +51,7 @@ public void assignTicket(TicketDetail ticketDetail ){
 }
 public void updateReassign(TicketDetail ticketDetail){
 	try{
-		ticketDetailValidator.assignTicketValidation(ticketDetail);;
+		ticketDetailValidator.assignTicketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
 		ticketDetailDao.reassignTicket(ticketDetail.getId(), ticketDetail.getAssignedTo().getId());
 	}catch(ValidationException e){
