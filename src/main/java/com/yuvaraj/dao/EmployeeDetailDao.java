@@ -1,0 +1,62 @@
+package com.yuvaraj.dao;
+
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.yuvaraj.model.Department;
+import com.yuvaraj.model.EmployeeDetail;
+
+public class EmployeeDetailDao {
+ JdbcTemplate jdbcTemplate=new JdbcTemplate();
+ public int save(EmployeeDetail employeeDetail)
+{
+	String sql="insert into seed_employee_details(id,name,email_id,password,department,role)values (?,?,?,?,?,?)";
+	Object[] params={employeeDetail.getId(),employeeDetail.getName(),employeeDetail.getEmailId(),employeeDetail.getPassword(),
+			employeeDetail.getDepartment().getId(),employeeDetail.getRole()};
+	return (jdbcTemplate.update(sql,params));
+	}
+ public int delete(int id) {
+	String sql = "delete from seed_employee_details where id =?";
+	Object[] params = { id };
+	return (jdbcTemplate.update(sql, params));
+}
+ public int update(int id,String password) {
+	String sql = "update seed_employee_details set password=?  where id =?";
+	Object[] params = {password, id };
+	return (jdbcTemplate.update(sql, params));
+}
+ public List<EmployeeDetail> select() {
+	String sql="select *from seed_employee_details";
+	return jdbcTemplate.query(sql,(rs,rownum)->{
+		final  EmployeeDetail employeeDetail = new EmployeeDetail();
+		employeeDetail.setId(rs.getInt("id"));
+		employeeDetail.setName(rs.getString("name"));
+		employeeDetail.setEmailId(rs.getString("email"));
+		employeeDetail.setPassword(rs.getString("password"));
+		Department department=new Department();
+		department.setId(rs.getInt("departname"));
+		employeeDetail.setDepartment(department);
+		employeeDetail.setActive(rs.getBoolean("active"));
+		employeeDetail.setRole(rs.getString("role"));
+		return employeeDetail;
+		
+	});
+ }
+ public EmployeeDetail selectOne(int id) {
+		String sql="select *from seed_employee_details where id=?";
+		return jdbcTemplate.queryForObject(sql,(rs,rownum)->{
+			final  EmployeeDetail employeeDetail = new EmployeeDetail();
+			employeeDetail.setId(rs.getInt("id"));
+			employeeDetail.setName(rs.getString("name"));
+			employeeDetail.setEmailId(rs.getString("email"));
+			employeeDetail.setPassword(rs.getString("password"));
+			Department department=new Department();
+			department.setId(rs.getInt("departname"));
+			employeeDetail.setDepartment(department);
+			employeeDetail.setActive(rs.getBoolean("active"));
+			return employeeDetail;
+			
+		});
+	 }
+}
