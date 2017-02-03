@@ -59,6 +59,9 @@ public void assignTicket(TicketDetail ticketDetail ){
 	try{
 		ticketDetailValidator.assignTicketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
+		Department department=new Department();
+		EmployeeDetail row=ticketDetailDao.checkEmployee(ticketDetail.getUserId().getId(),department.getName());
+		ticketDetailValidator.employeeValidation(row);
 		ticketDetailDao.assignTicket(ticketDetail.getId(), ticketDetail.getAssignedTo().getId(),ticketDetail.getModifiedTime());
 	}catch(ValidationException e)
 	{

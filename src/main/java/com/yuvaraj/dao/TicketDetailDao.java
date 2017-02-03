@@ -51,6 +51,7 @@ public int reassignTicket(int ticketId,int employeeId ){
 	Object[] params={employeeId,ticketId};
 	return jdbcTemplate.update(sql,params);
 }
+
 public List<TicketDetail> select(int userId) {
 	String sql="select *from ticket_details where user=?";
 	Object[] params={userId};
@@ -120,6 +121,17 @@ public EmployeeDetail checkadmin (int id)
 {
 	String sql="select id from seed_employee_details where id=? and role=(select id from seed_role where name=?)";
 	Object[] params={id,"admin"};
+	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
+		EmployeeDetail employeeDetail=new EmployeeDetail();
+		employeeDetail.setId(rs.getInt("id"));
+		return employeeDetail;
+	});
+	
+}
+public EmployeeDetail checkEmployee(int id,String name)
+{
+	String sql="select id from seed_employee_details where id=? and department=(select id from seed_department where name=?";
+	Object[] params={id,name};
 	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
 		EmployeeDetail employeeDetail=new EmployeeDetail();
 		employeeDetail.setId(rs.getInt("id"));

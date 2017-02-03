@@ -81,6 +81,8 @@ public void assignTicketValidation(TicketDetail ticketDetail)throws ValidationEx
 }
 public void deleteTicketAssign(EmployeeDetail row)throws ValidationException{
 	adminValidation(row);
-	
+	}
+public void employeeValidation(EmployeeDetail row)throws ValidationException{
+	adminValidation(row);
 }
 }
