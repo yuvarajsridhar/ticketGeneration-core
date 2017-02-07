@@ -15,13 +15,14 @@ public class UserDetailService {
 	final Logger logger = Logger.getLogger(Department.class.getName());
 	UserDetailValidator userDetailValidator=new UserDetailValidator();
 
-public void regestration(UserDetail userDetail){
+public void regestration(UserDetail userDetail) throws ValidationException{
 	try{
 		userDetailValidator.saveValidation(userDetail);
 		UserDetailDao userDetailDao=new UserDetailDao();
 		userDetailDao.save(userDetail);
 	}catch (ValidationException e){
 		logger.log(Level.SEVERE, "exception occur %s",e);
+		throw e;
 	}
 }
 public void delete(UserDetail userDetail){
@@ -42,19 +43,25 @@ public void update(UserDetail userDetail){
 		logger.log(Level.SEVERE,"exception occur", e);
 	}
 }
-public void login(String email,String password){
+public void  login(String email,String password) throws ValidationException{
+	
 	try{
 		UserDetailDao userDetailDao=new UserDetailDao();
 		UserDetail row=(userDetailDao.selectOne(email));
 		String tname=row.getEmailId();
-		String tpassword=row.getName();
+		String tpassword=row.getPassword();
 		
-		String message=(userDetailValidator.loginValidation(tname, tpassword, email, password));
+		userDetailValidator.loginValidation(tname, tpassword, email, password);
 		
-		System.out.println(message);
+		
 	}
 	catch(ValidationException e){
 		logger.log(Level.SEVERE, "exception occur", e);
+	     throw e;
+	
 	}
+	
+    
+    
 }
 }

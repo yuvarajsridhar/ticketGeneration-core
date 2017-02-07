@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.Role;
+import com.yuvaraj.model.UserDetail;
 
 public class EmployeeDetailDao {
  JdbcTemplate jdbcTemplate=new JdbcTemplate();
@@ -46,9 +47,10 @@ public class EmployeeDetailDao {
 		
 	});
  }
- public EmployeeDetail selectOne(int id) {
-		String sql="select *from seed_employee_details where id=?";
-		return jdbcTemplate.queryForObject(sql,(rs,rownum)->{
+ public EmployeeDetail selectOne(String emailid) {
+		String sql="select *from seed_employee_details where email_id=?";
+		Object[] params={emailid};
+		return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
 			final  EmployeeDetail employeeDetail = new EmployeeDetail();
 			employeeDetail.setId(rs.getInt("id"));
 			employeeDetail.setName(rs.getString("name"));
@@ -62,4 +64,5 @@ public class EmployeeDetailDao {
 			
 		});
 	 }
+ 
 }

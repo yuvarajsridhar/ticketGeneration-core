@@ -40,11 +40,11 @@ public class UserDetailValidator {
 	 idValidation(userDetail.getId());
 	 passwordValidation(userDetail.getPassword());
  }
- public String loginValidation(String Temail,String Tpassword,String email,String password)throws ValidationException{
+ public void loginValidation(String Temail,String Tpassword,String email,String password)throws ValidationException{
 	 String str1=Temail;
 	 String str2=Tpassword;
 	 if( str1.equals(email) && str2.equals(password)){
-		 return "successfull";
+		 
 		 
 	 }else 
 	 {

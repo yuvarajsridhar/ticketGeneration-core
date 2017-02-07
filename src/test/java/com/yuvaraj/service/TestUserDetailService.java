@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
+import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.Issue;
@@ -13,26 +14,30 @@ import com.yuvaraj.model.UserDetail;
 
 public class TestUserDetailService {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ValidationException {
 			UserDetailService userDetailService=new UserDetailService();
 
-		//testLogin();
+		testemployeeLogin();
 	//	 testRegistration();
 	//		testUpdate();
 //	testCloseTicket();
 			// testViewTicket();
-			//testAssignTicket();
+		//	testAssignTicket();
 			//testReplysolution();
             //  testReassign();
 		//	testDeleteTicket();
-	 ticketCreation();
+	// ticketCreation();
 			}
 	
-	static void testLogin(){
+	static void testLogin() throws ValidationException {
 		UserDetailService userDetailService=new UserDetailService();
-		userDetailService.login("syu@gmail.com", "yuvardn"); 
+		userDetailService.login("syu@gmail.com", "yuvaraj"); 
 	}
-	static void testRegistration(){
+	static void testemployeeLogin() throws ValidationException {
+		EmployeeDetailService employeeDetailService=new EmployeeDetailService();
+		employeeDetailService.login("s8@gmail.com", "ssss"); 
+	}
+	static void testRegistration() throws ValidationException{
 		UserDetailService userDetailService=new UserDetailService();
 
 		UserDetail userDetail=new UserDetail();
