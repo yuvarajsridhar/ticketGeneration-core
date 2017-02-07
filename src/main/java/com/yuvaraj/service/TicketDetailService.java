@@ -1,5 +1,6 @@
 package com.yuvaraj.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,16 +37,17 @@ public void delete(TicketDetail ticketDetail){
 		logger.log(Level.SEVERE,"exception occur",e);
 	}
 }
-public void update(TicketDetail ticketDetail){
+public void update(TicketDetail ticketDetail) throws ValidationException{
 	try{
 		ticketDetailValidator.updateValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
-		ticketDetailDao.update(ticketDetail.getUserId().getId(), ticketDetail.getUserId().getId(),ticketDetail.getSubject());
+		ticketDetailDao.update(ticketDetail.getId(),ticketDetail.getSubject());
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE, "Exception occur", e);
+		throw e;
 		}
 }
-public void createTicket(TicketDetail ticketDetail){
+public void createTicket(TicketDetail ticketDetail) throws ValidationException{
 	try{
 		ticketDetailValidator.createTicketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
@@ -53,6 +55,7 @@ public void createTicket(TicketDetail ticketDetail){
 		
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE,"Exception occur", e);
+		throw e;
 	}
 }
 public void assignTicket(TicketDetail ticketDetail ){
@@ -77,14 +80,18 @@ public void updateReassign(TicketDetail ticketDetail){
 		logger.log(Level.SEVERE, "Exception occur", e);
 		}
 }
-public void close(TicketDetail ticketDetail){
+public void close(TicketDetail ticketDetail) throws ValidationException{
 	try{
 		ticketDetailValidator.closeticketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
 		ticketDetailDao.closeTicket(ticketDetail.getId());
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE, "exception occur", e);
+		throw e;
 	}
 }
-
+public List<TicketDetail> viewticket(TicketDetail ticketDetail) throws ValidationException{
+	TicketDetailDao ticketDetailDao=new TicketDetailDao();
+	return ticketDetailDao.ticketview(ticketDetail.getUserId().getId());
+}
 }

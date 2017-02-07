@@ -31,9 +31,9 @@ public int delete(int id,int userId) {
 	Object[] params = { id,userId };
 	return (jdbcTemplate.update(sql, params));
 }
-public int update(int id,int userId,String status) {
-	String sql = "update ticket_Details set subject=? where id =? and user=?";
-	Object[] params = { status,id,userId };
+public int update(int id,String status) {
+	String sql = "update ticket_Details set subject=? where id=?";
+	Object[] params = { status,id };
 	return (jdbcTemplate.update(sql, params));
 }
 public int closeTicket(int id){
@@ -138,5 +138,34 @@ public EmployeeDetail checkEmployee(int id,String name)
 		return employeeDetail;
 	});
 	
+}
+public List<TicketDetail> ticketview(int id) {
+	String sql="select *from ticket_details where user=?";
+	Object[] params={id};
+	return jdbcTemplate.query(sql,params,(rs,rownum)->{
+		TicketDetail ticketDetail= new TicketDetail();
+		ticketDetail.setId(rs.getInt("id"));
+		
+		UserDetail userDetail=new UserDetail();
+		userDetail.setId(rs.getInt("user"));
+		ticketDetail.setUserId(userDetail);
+		
+		Department department=new Department();
+		department.setId(rs.getInt("department"));
+		ticketDetail.setDepartmentId(department);
+		
+		ticketDetail.setSubject(rs.getString("subject"));
+		ticketDetail.setDescription(rs.getString("description"));
+		 
+		
+		
+		
+		ticketDetail.setStatus(rs.getString("status"));
+		ticketDetail.setPriority(rs.getString("priority"));
+		
+		
+		return ticketDetail;
+		
+	});
 }
 }

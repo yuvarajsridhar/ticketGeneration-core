@@ -35,7 +35,7 @@ public class TestUserDetailService {
 	}
 	static void testemployeeLogin() throws ValidationException {
 		EmployeeDetailService employeeDetailService=new EmployeeDetailService();
-		employeeDetailService.login("s8@gmail.com", "ssss"); 
+		employeeDetailService.login("s8@gmail.com", "yuvaraj"); 
 	}
 	static void testRegistration() throws ValidationException{
 		UserDetailService userDetailService=new UserDetailService();
@@ -48,7 +48,7 @@ public class TestUserDetailService {
 	userDetailService.regestration(userDetail);
 		
 	}
-	static void ticketCreation(){
+	static void ticketCreation() throws ValidationException{
 		TicketDetail ticketDetail=new TicketDetail();
 		ticketDetail.setId(1);
 		UserDetail userDetail=new UserDetail();
@@ -64,7 +64,7 @@ public class TestUserDetailService {
 		TicketDetailService ticketDetailService=new TicketDetailService();
 		ticketDetailService.createTicket(ticketDetail);
 	}
-	 static void  testUpdate(){
+	 static void  testUpdate() throws ValidationException{
 		 TicketDetailService ticketDetailService=new TicketDetailService();
 		 TicketDetail ticketDetail=new TicketDetail();
 		 ticketDetail.setId(1);
@@ -74,7 +74,7 @@ public class TestUserDetailService {
          ticketDetail.setUserId(userDetail);
 		 ticketDetailService.update(ticketDetail);
 	 }
-	static void testCloseTicket(){
+	static void testCloseTicket() throws ValidationException{
 		TicketDetailService ticketDetailService=new TicketDetailService();
 		TicketDetail ticketDetail=new TicketDetail();
 		ticketDetail.setId(1);

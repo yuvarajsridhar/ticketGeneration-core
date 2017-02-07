@@ -54,7 +54,7 @@ public class EmployeeDetailDao {
 			final  EmployeeDetail employeeDetail = new EmployeeDetail();
 			employeeDetail.setId(rs.getInt("id"));
 			employeeDetail.setName(rs.getString("name"));
-			employeeDetail.setEmailId(rs.getString("email"));
+			employeeDetail.setEmailId(rs.getString("email_id"));
 			employeeDetail.setPassword(rs.getString("password"));
 			Department department=new Department();
 			department.setId(rs.getInt("departname"));
