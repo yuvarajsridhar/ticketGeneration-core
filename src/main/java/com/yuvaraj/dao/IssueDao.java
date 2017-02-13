@@ -32,7 +32,7 @@ public int update(int id,String solution){
 	return jdbcTemplate.update(sql,params);
 }
 public int deleteIssue(TicketDetail ticketDetail) {
-	String sql = "delete from issues where id =?";
+	String sql = "delete from issues where ticket =?";
 	Object[] params = { ticketDetail.getId() };
 	return (jdbcTemplate.update(sql, params));
 }

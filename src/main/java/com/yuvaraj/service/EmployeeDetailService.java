@@ -35,7 +35,7 @@ public class EmployeeDetailService {
 		 logger.log(Level.CONFIG,"exception occur",e);
 	 }
  }
- public void  login(String email,String password) throws ValidationException{
+ public EmployeeDetail  login(String email,String password) throws ValidationException{
 		
 		try{
 			System.out.println("hello");
@@ -50,11 +50,12 @@ public class EmployeeDetailService {
 		System.out.println("hello");
 
 		System.out.println(row.getEmailId());
+		String name=row.getName();
 			String tname=row.getEmailId();
 			String tpassword=row.getPassword();
 			System.out.println(row.getEmailId());
 			userDetailValidator.loginValidation(tname, tpassword, email, password);
-			
+			return row;
 			
 		}
 		catch(ValidationException e){
