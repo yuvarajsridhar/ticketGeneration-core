@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.yuvaraj.model.Issue;
 import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.util.ConnectionUtil;
+import com.yuvaraj.util.Mail;
 
 public class IssueDao {
 JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
@@ -18,6 +19,7 @@ public int save(Issue issue)
 	String sql="insert into issues(id,ticket,solution)values (?,?,?)";
 	Object[] params={issue.getId(),issue.getTicket().getId(),issue.getSolution()};
 	return (jdbcTemplate.update(sql,params));
+	
 	}
 public int delete(int id) {
 	String sql = "delete from issues where id =?";

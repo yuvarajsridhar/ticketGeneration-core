@@ -42,17 +42,17 @@ public void update(UserDetail userDetail){
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE,"exception occur", e);
 	}
-}
-public void  login(String email,String password) throws ValidationException{
+}public UserDetail  login(String email,String password) throws ValidationException{
 	
 	try{
 		UserDetailDao userDetailDao=new UserDetailDao();
 		UserDetail row=(userDetailDao.selectOne(email));
+		
 		String tname=row.getEmailId();
 		String tpassword=row.getPassword();
 		
 		userDetailValidator.loginValidation(tname, tpassword, email, password);
-		
+		 return row;
 		
 	}
 	catch(ValidationException e){
@@ -61,7 +61,7 @@ public void  login(String email,String password) throws ValidationException{
 	
 	}
 	
-    
+   
     
 }
 }

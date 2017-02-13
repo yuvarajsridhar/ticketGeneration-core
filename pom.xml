@@ -15,6 +15,11 @@
 			<version>1.16.12</version>
 		</dependency>
 		<dependency>
+		<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.1.1</version>
@@ -24,6 +29,13 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>4.3.5.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+<dependency>
+    <groupId>javax.mail</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.4</version>
+</dependency>
+		
 			</dependencies>
 	<build>
 

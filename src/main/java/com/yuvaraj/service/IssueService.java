@@ -6,14 +6,13 @@ import java.util.logging.Logger;
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.Issue;
-import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.validator.IssueValidator;
 
 public class IssueService {
 IssueValidator issueValidator=new IssueValidator();
 final Logger logger = Logger.getLogger(Issue.class.getName());
 
-public void replyToTicket(Issue issue){
+public void replyToTicket(Issue issue) throws ValidationException{
 	try{
 		issueValidator.saveValidation(issue);
 		IssueDao issueDao=new IssueDao();
@@ -23,6 +22,7 @@ public void replyToTicket(Issue issue){
 	}
 	catch(ValidationException e){
 		logger.log(Level.SEVERE, "Exception occur", e);
+		throw e;
 	}
 }
 

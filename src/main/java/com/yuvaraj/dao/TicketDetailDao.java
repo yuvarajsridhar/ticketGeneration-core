@@ -3,27 +3,40 @@ package com.yuvaraj.dao;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.sun.xml.internal.ws.api.pipe.ThrowableContainerPropertySet;
 import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.model.UserDetail;
 import com.yuvaraj.util.ConnectionUtil;
+import com.yuvaraj.util.Mail;
 
 public class TicketDetailDao {
+	   
+
 JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 public int save(TicketDetail ticketDetail)
-{
-	String sql="insert into ticket_details(id,user,department,subject,description,assigned_to,created_time,modified_time,priority)values (?,?,?,?,?,?,?,?,?)";
-	Object[] params={ticketDetail.getId(),ticketDetail.getUserId().getId(),ticketDetail.getDepartmentId().getId(),ticketDetail.getSubject()
-			,ticketDetail.getDescription(),ticketDetail.getAssignedTo().getId(),ticketDetail.getCreatedTime(),ticketDetail.getModifiedTime(),ticketDetail.getPriority()};
-	return (jdbcTemplate.update(sql,params));
+{  String sql="insert into ticket_details(id,user,department,subject,description,assigned_to,created_time,modified_time,priority)values (?,?,?,?,?,?,?,?,?)";
+Object[] params={ticketDetail.getId(),ticketDetail.getUserId().getId(),ticketDetail.getDepartmentId().getId(),ticketDetail.getSubject()
+		,ticketDetail.getDescription(),ticketDetail.getAssignedTo().getId(),ticketDetail.getCreatedTime(),ticketDetail.getModifiedTime(),ticketDetail.getPriority()};
+return (jdbcTemplate.update(sql,params));
 	}
-public int createticket(TicketDetail ticketDetail){
+public int createticket(TicketDetail ticketDetail) throws EmailException{
+
+	UserDetail userDetail=new UserDetail();
+try{
+	Mail.sendSimpleMail("syuvraj8@gmail.com","your ticket is created successfully and your description is ",ticketDetail.getDescription() );
+
 	String sql="insert into ticket_details(id,user,department,subject,description,created_time,priority )values(?,?,?,?,?,?,?)";
 	Object[] params={ticketDetail.getId(),ticketDetail.getUserId().getId(),ticketDetail.getDepartmentId().getId(),ticketDetail.getSubject(),ticketDetail.getDescription(),ticketDetail.getCreatedTime(),ticketDetail.getPriority()};
-   return jdbcTemplate.update(sql,params);
+   return jdbcTemplate.update(sql,params);}
+catch(EmailException e){
+	throw e;
+}
+   
 }
 public int delete(int id,int userId) {
 	
@@ -128,10 +141,10 @@ public EmployeeDetail checkadmin (int id)
 	});
 	
 }
-public EmployeeDetail checkEmployee(int id,String name)
+public EmployeeDetail checkEmployee(int id)
 {
-	String sql="select id from seed_employee_details where id=? and department=(select id from seed_department where name=?";
-	Object[] params={id,name};
+	String sql="select id from seed_employee_details where id=? and department=(select id from seed_department where name=?)";
+	Object[] params={id,"admin"};
 	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
 		EmployeeDetail employeeDetail=new EmployeeDetail();
 		employeeDetail.setId(rs.getInt("id"));

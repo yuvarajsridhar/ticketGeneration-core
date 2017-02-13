@@ -16,13 +16,14 @@ public class EmployeeDetailService {
  EmployeeDetailValidator employeeDetailValidator=new EmployeeDetailValidator();
 	final Logger logger = Logger.getLogger(Department.class.getName());
 
- public void save(EmployeeDetail employeeDetail){
+ public void save(EmployeeDetail employeeDetail) throws ValidationException{
 	 try{
 		 employeeDetailValidator.saveValidation(employeeDetail);
 		 EmployeeDetailDao employeeDetailDao=new EmployeeDetailDao();
 		 employeeDetailDao.save(employeeDetail);
 	 }catch(ValidationException e){
 		 logger.log(Level.SEVERE, "exception occur",e);
+		 throw e;
 	 }
  }
  public void delete(EmployeeDetail employeeDetail){
@@ -37,9 +38,18 @@ public class EmployeeDetailService {
  public void  login(String email,String password) throws ValidationException{
 		
 		try{
+			System.out.println("hello");
 			UserDetailValidator userDetailValidator=new UserDetailValidator();
-		 EmployeeDetailDao employeeDetailDao=new EmployeeDetailDao();
-		EmployeeDetail row	=employeeDetailDao.selectOne(email);
+			System.out.println("hello1");
+
+		 EmployeeDetailDao dao=new EmployeeDetailDao();
+			System.out.println("hello2");
+
+		 System.out.println(dao.selectOne(email).getEmailId());
+		EmployeeDetail row	= dao.selectOne(email);
+		System.out.println("hello");
+
+		System.out.println(row.getEmailId());
 			String tname=row.getEmailId();
 			String tpassword=row.getPassword();
 			System.out.println(row.getEmailId());

@@ -2,12 +2,15 @@ package com.yuvaraj.service;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.mail.EmailException;
+
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
 import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.Department;
 import com.yuvaraj.model.EmployeeDetail;
 import com.yuvaraj.model.Issue;
+import com.yuvaraj.model.Role;
 import com.yuvaraj.model.TicketDetail;
 import com.yuvaraj.model.UserDetail;
 
@@ -16,8 +19,10 @@ public class TestUserDetailService {
 
 	public static void main(String[] args) throws ValidationException {
 			UserDetailService userDetailService=new UserDetailService();
-
-		testemployeeLogin();
+			//TicketDetailDao  ticketDetailDao=new TicketDetailDao();
+			
+			//System.out.println(ticketDetailDao.checkEmployee(1));
+		//testemployeeLogin();
 	//	 testRegistration();
 	//		testUpdate();
 //	testCloseTicket();
@@ -27,8 +32,26 @@ public class TestUserDetailService {
             //  testReassign();
 		//	testDeleteTicket();
 	// ticketCreation();
+			testemployeeregistration();
 			}
 	
+	private static void testemployeeregistration() throws ValidationException {
+		EmployeeDetail employeeDetail=new EmployeeDetail();
+		employeeDetail.setId(2);
+		employeeDetail.setName("yuvaj");
+		employeeDetail.setEmailId("hraja@gmail.com");
+		employeeDetail.setPassword("highcourt");
+		Department department=new Department();
+		department.setId(1);
+		employeeDetail.setDepartment(department);
+		Role role=new Role();
+		role.setId(1);
+		employeeDetail.setRole(role);
+		EmployeeDetailService employeeDetailService=new EmployeeDetailService();
+		employeeDetailService.save(employeeDetail);
+		
+	}
+
 	static void testLogin() throws ValidationException {
 		UserDetailService userDetailService=new UserDetailService();
 		userDetailService.login("syu@gmail.com", "yuvaraj"); 
@@ -48,7 +71,7 @@ public class TestUserDetailService {
 	userDetailService.regestration(userDetail);
 		
 	}
-	static void ticketCreation() throws ValidationException{
+	static void ticketCreation() throws ValidationException, EmailException{
 		TicketDetail ticketDetail=new TicketDetail();
 		ticketDetail.setId(1);
 		UserDetail userDetail=new UserDetail();
@@ -84,10 +107,10 @@ public class TestUserDetailService {
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
 		System.out.println(ticketDetailDao.select(1));
 	}
-	static void testAssignTicket(){
+	static void testAssignTicket() throws ValidationException{
 		TicketDetailService ticketDetailService=new TicketDetailService();
 		TicketDetail ticketDetail=new TicketDetail();
-		ticketDetail.setId(1);
+		ticketDetail.setId(16);
 		EmployeeDetail employeeDetail =new EmployeeDetail();
 		employeeDetail.setId(1);
 		ticketDetail.setModifiedTime(LocalDateTime.now());
@@ -95,7 +118,7 @@ public class TestUserDetailService {
 		
 		ticketDetailService.assignTicket(ticketDetail);
 	}
-	static void testReplysolution(){
+	static void testReplysolution() throws ValidationException{
 	IssueService issueService=new IssueService();
 	Issue issue=new Issue();
 	issue.setId(1);
@@ -120,9 +143,9 @@ public class TestUserDetailService {
 		TicketDetailService ticketDetailService=new TicketDetailService();
 		TicketDetail ticketDetail=new TicketDetail();
 		ticketDetail.setId(1);
-		UserDetail userDetail=new UserDetail();
-		userDetail.setId(1);
-		ticketDetail.setUserId(userDetail);
+		EmployeeDetail employeeDetail=new EmployeeDetail();
+		employeeDetail.setId(1);
+		ticketDetail.setAssignedTo(employeeDetail);
 
 		ticketDetailService.delete(ticketDetail);
 	}

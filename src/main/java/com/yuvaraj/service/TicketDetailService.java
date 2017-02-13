@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.mail.EmailException;
+
 import com.yuvaraj.dao.IssueDao;
 import com.yuvaraj.dao.TicketDetailDao;
 import com.yuvaraj.exception.ValidationException;
@@ -20,7 +22,7 @@ public void save(TicketDetail ticketDetail){
 		ticketDetailValidator.saveValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
 		ticketDetailDao.save(ticketDetail);
-	}catch(ValidationException e){
+	}catch(ValidationException  e){
 		logger.log(Level.SEVERE,"exception occur",e);
 	}
 }
@@ -28,7 +30,7 @@ public void delete(TicketDetail ticketDetail){
 	try{
 		ticketDetailValidator.deleteValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
-		EmployeeDetail row =ticketDetailDao.checkadmin(ticketDetail.getUserId().getId());
+		EmployeeDetail row =ticketDetailDao.checkadmin(ticketDetail.getAssignedTo().getId());
 	     ticketDetailValidator.deleteTicketAssign(row);
 			IssueDao issueDao=new IssueDao();
 			issueDao.deleteIssue(ticketDetail);
@@ -47,28 +49,36 @@ public void update(TicketDetail ticketDetail) throws ValidationException{
 		throw e;
 		}
 }
-public void createTicket(TicketDetail ticketDetail) throws ValidationException{
+public void createTicket(TicketDetail ticketDetail) throws ValidationException,EmailException{
 	try{
 		ticketDetailValidator.createTicketValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
 		ticketDetailDao.createticket(ticketDetail);
 		
-	}catch(ValidationException e){
+	}catch(ValidationException | EmailException e){
 		logger.log(Level.SEVERE,"Exception occur", e);
 		throw e;
 	}
 }
-public void assignTicket(TicketDetail ticketDetail ){
+public void assignTicket(TicketDetail ticketDetail ) throws ValidationException{
 	try{
+		System.out.println("1");
 		ticketDetailValidator.assignTicketValidation(ticketDetail);
+		System.out.println("2");
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
+		System.out.println("3");
 		Department department=new Department();
-		EmployeeDetail row=ticketDetailDao.checkEmployee(ticketDetail.getUserId().getId(),department.getName());
+		System.out.println("4");
+		EmployeeDetail row=ticketDetailDao.checkEmployee(ticketDetail.getAssignedTo().getId());
+		System.out.println("5");
 		ticketDetailValidator.employeeValidation(row);
+		System.out.println("6");
 		ticketDetailDao.assignTicket(ticketDetail.getId(), ticketDetail.getAssignedTo().getId(),ticketDetail.getModifiedTime());
+		System.out.println("7");
 	}catch(ValidationException e)
 	{
 		logger.log(Level.SEVERE,"Exception occur", e);
+		throw e;
 	}
 }
 public void updateReassign(TicketDetail ticketDetail){
