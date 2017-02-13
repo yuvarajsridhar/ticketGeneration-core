@@ -26,17 +26,23 @@ public void save(TicketDetail ticketDetail){
 		logger.log(Level.SEVERE,"exception occur",e);
 	}
 }
-public void delete(TicketDetail ticketDetail){
+public void delete(TicketDetail ticketDetail) throws ValidationException{
 	try{
+		System.out.println("0");
 		ticketDetailValidator.deleteValidation(ticketDetail);
 		TicketDetailDao ticketDetailDao=new TicketDetailDao();
+		System.out.println("1");
 		EmployeeDetail row =ticketDetailDao.checkadmin(ticketDetail.getAssignedTo().getId());
+		System.out.println("2");
 	     ticketDetailValidator.deleteTicketAssign(row);
+	     System.out.println("3");
 			IssueDao issueDao=new IssueDao();
+			System.out.println("4");
 			issueDao.deleteIssue(ticketDetail);
-		ticketDetailDao.delete(ticketDetail.getId(),ticketDetail.getUserId().getId());
+		ticketDetailDao.delete(ticketDetail.getId(),ticketDetail.getAssignedTo().getId());
 	}catch(ValidationException e){
 		logger.log(Level.SEVERE,"exception occur",e);
+		throw e;
 	}
 }
 public void update(TicketDetail ticketDetail) throws ValidationException{

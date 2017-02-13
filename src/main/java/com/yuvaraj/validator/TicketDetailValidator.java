@@ -65,7 +65,7 @@ public void createTicketValidation(TicketDetail ticketDetail)throws ValidationEx
 }
 public void deleteValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());
-	userValidation(ticketDetail.getUserId().getId());
+	userValidation(ticketDetail.getAssignedTo().getId());
 }
 public void updateValidation(TicketDetail ticketDetail)throws ValidationException{
 	idvalidation(ticketDetail.getId());

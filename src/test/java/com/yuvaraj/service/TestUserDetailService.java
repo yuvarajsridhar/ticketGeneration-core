@@ -30,9 +30,9 @@ public class TestUserDetailService {
 		//	testAssignTicket();
 			//testReplysolution();
             //  testReassign();
-		//	testDeleteTicket();
+			testDeleteTicket();
 	// ticketCreation();
-			testemployeeregistration();
+		//	testemployeeregistration();
 			}
 	
 	private static void testemployeeregistration() throws ValidationException {
@@ -139,7 +139,7 @@ public class TestUserDetailService {
 		
 		ticketDetailService.updateReassign(ticketDetail);
 	}
-	static void testDeleteTicket(){
+	static void testDeleteTicket() throws ValidationException{
 		TicketDetailService ticketDetailService=new TicketDetailService();
 		TicketDetail ticketDetail=new TicketDetail();
 		ticketDetail.setId(1);

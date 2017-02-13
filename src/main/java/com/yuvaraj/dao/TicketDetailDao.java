@@ -38,10 +38,10 @@ catch(EmailException e){
 }
    
 }
-public int delete(int id,int userId) {
+public int delete(int id,int employeeid) {
 	
-	String sql = "delete from ticket_details where id =? and user=?";
-	Object[] params = { id,userId };
+	String sql = "delete from ticket_details where id =? and assigned_to=?";
+	Object[] params = { id,employeeid };
 	return (jdbcTemplate.update(sql, params));
 }
 public int update(int id,String status) {
