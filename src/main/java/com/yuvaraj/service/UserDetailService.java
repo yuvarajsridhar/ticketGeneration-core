@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import java.util.logging.Logger;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.yuvaraj.dao.UserDetailDao;
 import com.yuvaraj.exception.ValidationException;
@@ -19,8 +20,11 @@ public void regestration(UserDetail userDetail) throws ValidationException{
 	try{
 		userDetailValidator.saveValidation(userDetail);
 		UserDetailDao userDetailDao=new UserDetailDao();
-		userDetailDao.save(userDetail);
-	}catch (ValidationException e){
+	//		UserDetail row= userDetailDao.idcheck(userDetail.getId());
+      //      System.out.println(row);
+			
+			userDetailDao.save(userDetail);
+	}catch (ValidationException | EmptyResultDataAccessException e){
 		logger.log(Level.SEVERE, "exception occur %s",e);
 		throw e;
 	}

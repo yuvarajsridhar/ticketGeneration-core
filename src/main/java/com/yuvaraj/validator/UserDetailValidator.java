@@ -1,5 +1,6 @@
 package com.yuvaraj.validator;
 
+import com.yuvaraj.dao.UserDetailDao;
 import com.yuvaraj.exception.ValidationException;
 import com.yuvaraj.model.UserDetail;
 import com.yuvaraj.util.ValidationUtil;
@@ -26,10 +27,10 @@ public class UserDetailValidator {
  public void saveValidation(UserDetail userDetail)throws ValidationException{
 	 userDetailValidation(userDetail);
 	 idValidation(userDetail.getId());
+	
 	 nameValidation(userDetail.getName());
 	 emailValidation(userDetail.getEmailId());
-	 passwordValidation(userDetail.getPassword());
-	 statusValidation(userDetail.isActive());
+	
 	 }
  public void deleteValidation(UserDetail userDetail)throws ValidationException{
 	 userDetailValidation(userDetail);

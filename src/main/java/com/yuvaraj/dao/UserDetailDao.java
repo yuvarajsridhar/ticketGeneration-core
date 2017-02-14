@@ -2,6 +2,7 @@ package com.yuvaraj.dao;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.yuvaraj.model.UserDetail;
@@ -40,6 +41,21 @@ public class UserDetailDao {
 	});
 	
 }
+ public UserDetail idcheck(int id)throws EmptyResultDataAccessException {
+	String sql="select * from seed_user_details where id=?";
+	Object[] params={id};
+	return jdbcTemplate.queryForObject(sql,params,(rs,rownum)->{
+		final UserDetail userDetail = new UserDetail();
+		userDetail.setId(rs.getInt("id"));
+		userDetail.setName(rs.getString("name"));
+		userDetail.setEmailId(rs.getString("email_id"));
+	     userDetail.setPassword(rs.getString("password"));
+	     userDetail.setActive(rs.getBoolean("active"));
+		
+		return userDetail;
+		
+	});
+ }
  public UserDetail selectOne(String email) {
 		String sql="select *from seed_user_details where email_id=? ";
 		Object[] params={email};
